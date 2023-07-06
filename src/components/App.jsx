@@ -6,20 +6,14 @@ class App extends Component {
     good: 0,
     neutral: 0,
     bad: 0,
-    isFeedbackGiven: false, // => The flag to display gratitude after Feedback
   };
 
   handleFeedback = event => {
     const option = event.target.textContent;
-    this.setState(
-      prevState => ({
-        ...prevState,
-        [option]: prevState[option] + 1,
-      }),
-      () => {
-        this.setState({ isFeedbackGiven: true });
-      }
-    );
+    this.setState(prevState => ({
+      ...prevState,
+      [option]: prevState[option] + 1,
+    }));
     event.target.blur(); // => Removing focus after a button-click
   };
 
@@ -35,14 +29,10 @@ class App extends Component {
   }
 
   render() {
-    const { good, neutral, bad, isFeedbackGiven } = this.state;
+    const { good, neutral, bad } = this.state;
     const total = this.countTotalFeedback();
     const positivePercentage = this.countPositiveFeedbackPercentage();
-    const options = [
-      { name: 'good', color: 'lime' },
-      { name: 'neutral', color: 'gray' },
-      { name: 'bad', color: 'red' },
-    ];
+    const options = Object.keys(this.state); // =>  Converting state keys into an array of strings according to Prop-types of FeedbackOptions
 
     return (
       <div className="container">
@@ -64,9 +54,7 @@ class App extends Component {
                 total={total}
                 positivePercentage={positivePercentage}
               />
-              {isFeedbackGiven && (
-                <Notification text="Thanks for your feedback!" />
-              )}
+              <Notification text="Thanks for your feedback!" />
             </>
           )}
         </Section>

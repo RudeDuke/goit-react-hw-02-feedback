@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { OptionBtn, OptionContainer } from './FeedbackOptions.styled';
 
@@ -6,23 +5,24 @@ const FeedbackOptions = ({ options, onLeaveFeedback }) => (
   <OptionContainer>
     {options.map(option => (
       <OptionBtn
-        key={option.name}
-        color={option.color}
+        key={option}
+        color={optionColors[option]}
         onClick={onLeaveFeedback}
       >
-        {option.name}
+        {option}
       </OptionBtn>
     ))}
   </OptionContainer>
 );
 
+const optionColors = {
+  good: 'lime',
+  neutral: 'gray',
+  bad: 'red',
+};
+
 FeedbackOptions.propTypes = {
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      color: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  options: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   onLeaveFeedback: PropTypes.func.isRequired,
 };
 
